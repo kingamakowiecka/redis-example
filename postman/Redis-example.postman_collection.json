@@ -1,0 +1,123 @@
+{
+	"info": {
+		"name": "Redis-example",
+		"_postman_id": "5becb2f6-8115-ab2c-873a-5026494bd7c0",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add person",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"person_id\", jsonData.id);"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"function getRandomValue() {",
+							"    return Math.floor(Math.random() * 100000000);",
+							"}",
+							"",
+							"postman.setEnvironmentVariable(\"id\", getRandomValue());"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"{{id}}\",\n\t\"name\": \"Alicja\",\n\t\"surname\": \"Kowalska\",\n\t\"address\": {\n\t\t\"street\": \"Jaśminowa\",\n\t\t\"homeNumber\": \"1/11\",\n\t\t\"postalCode\": \"00-000\",\n\t\t\"city\": \"Warszawa\"\n\t},\n\t\"gender\": \"FEMALE\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/person",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"person"
+					]
+				},
+				"description": "Add person"
+			},
+			"response": []
+		},
+		{
+			"name": "Get person",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"kinga.makowiecka\",\n\t\"name\": \"Kinga\",\n\t\"surname\": \"Makowiecka\",\n\t\"address\": {\n\t\t\"street\": \"Wyszyńskiego\",\n\t\t\"homeNumber\": \"7/111\",\n\t\t\"postalCode\": \"85-028\",\n\t\t\"city\": \"Bydgoszcz\"\n\t},\n\t\"gender\": \"FEMALE\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/person/{{person_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"person",
+						"{{person_id}}"
+					]
+				},
+				"description": "Get person"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All people",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"{{id}}\",\n\t\"name\": \"Kinga\",\n\t\"surname\": \"Makowiecka\",\n\t\"address\": {\n\t\t\"street\": \"Wyszyńskiego\",\n\t\t\"homeNumber\": \"7/111\",\n\t\t\"postalCode\": \"85-028\",\n\t\t\"city\": \"Bydgoszcz\"\n\t},\n\t\"gender\": \"FEMALE\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/person",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"person"
+					]
+				},
+				"description": "get all"
+			},
+			"response": []
+		}
+	]
+}
